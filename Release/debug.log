@@ -1,0 +1,22 @@
+[2025/11/20 12:33:20] 程序启动
+[2025/11/20 12:33:20] 语言选项: 
+[2025/11/20 12:33:20] 创建主窗体
+[2025/11/20 12:33:20] MainForm构造函数开始
+[2025/11/20 12:33:22] InitializeLanguageSelection: bLanguageSettings.Visible=False, Location={X=12,Y=240}, Size={Width=100, Height=28}
+[2025/11/20 12:33:22] MainForm构造函数完成
+[2025/11/20 12:33:22] 窗口状态: Visible=False, WindowState=Normal, Location={X=0,Y=0}
+[2025/11/20 12:33:22] MainForm_Load事件开始
+[2025/11/20 12:33:22] MainForm_Load事件完成 - 窗口应该可见
+[2025/11/20 12:33:22] MainForm_Shown: bLanguageSettings.Visible=True, Location={X=12,Y=240}, Size={Width=100, Height=28}
+[2025/11/20 12:33:24] 程序正常退出
+[2025/11/20 12:49:43] 程序启动
+[2025/11/20 12:49:43] 语言选项: en
+[2025/11/20 12:49:43] 创建主窗体
+[2025/11/20 12:49:44] MainForm构造函数开始
+[2025/11/20 12:49:44] InitializeLanguageSelection: bLanguageSettings.Visible=False, Location={X=12,Y=240}, Size={Width=100, Height=28}
+[2025/11/20 12:49:44] MainForm构造函数完成
+[2025/11/20 12:49:44] 窗口状态: Visible=False, WindowState=Normal, Location={X=0,Y=0}
+[2025/11/20 12:49:44] MainForm_Load事件开始
+[2025/11/20 12:49:44] MainForm_Load事件完成 - 窗口应该可见
+[2025/11/20 12:49:44] MainForm_Shown: bLanguageSettings.Visible=True, Location={X=12,Y=240}, Size={Width=100, Height=28}
+[2025/11/20 12:49:46] 程序正常退出
