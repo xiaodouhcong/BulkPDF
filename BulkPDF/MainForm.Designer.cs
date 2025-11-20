@@ -1,4 +1,4 @@
-﻿namespace BulkPDF
+namespace BulkPDF
 {
     partial class MainForm
     {
@@ -43,6 +43,9 @@
             this.lBulkPDF = new System.Windows.Forms.Label();
             this.bLoadConfiguration = new System.Windows.Forms.Button();
             this.llDokumentation = new System.Windows.Forms.LinkLabel();
+            this.lblLanguage = new System.Windows.Forms.Label();
+            this.cbLanguage = new System.Windows.Forms.ComboBox();
+            this.bLanguageSettings = new System.Windows.Forms.Button();
             this.tbDataSourceSelect = new System.Windows.Forms.TabPage();
             this.rtbReselectWarning = new System.Windows.Forms.RichTextBox();
             this.gbSpreadsheet = new System.Windows.Forms.GroupBox();
@@ -159,6 +162,9 @@
             this.tpWelcome.Controls.Add(this.lBulkPDF);
             this.tpWelcome.Controls.Add(this.bLoadConfiguration);
             this.tpWelcome.Controls.Add(this.llDokumentation);
+            this.tpWelcome.Controls.Add(this.cbLanguage);
+            this.tpWelcome.Controls.Add(this.lblLanguage);
+            this.tpWelcome.Controls.Add(this.bLanguageSettings);
             this.tpWelcome.Name = "tpWelcome";
             // 
             // llBulkPDFde
@@ -208,6 +214,45 @@
             this.llDokumentation.Name = "llDokumentation";
             this.llDokumentation.TabStop = true;
             this.llDokumentation.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llDokumentation_LinkClicked);
+            // 
+            // lblLanguage
+            // 
+            this.lblLanguage.AutoSize = true;
+            this.lblLanguage.BackColor = System.Drawing.Color.Transparent;
+            this.lblLanguage.Location = new System.Drawing.Point(12, 230);
+            this.lblLanguage.Name = "lblLanguage";
+            this.lblLanguage.Size = new System.Drawing.Size(58, 13);
+            this.lblLanguage.TabIndex = 9;
+            this.lblLanguage.Text = "Language:";
+            this.lblLanguage.Visible = true;
+            // 
+            // cbLanguage
+            // 
+            this.cbLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbLanguage.FormattingEnabled = true;
+            this.cbLanguage.Items.AddRange(new object[] {
+            "English (en)",
+            "Deutsch (de)",
+            "中文 (zh-CN)"});
+            this.cbLanguage.Location = new System.Drawing.Point(76, 227);
+            this.cbLanguage.Name = "cbLanguage";
+            this.cbLanguage.Size = new System.Drawing.Size(120, 21);
+            this.cbLanguage.TabIndex = 10;
+            this.cbLanguage.Visible = true;
+            this.cbLanguage.SelectedIndexChanged += new System.EventHandler(this.cbLanguage_SelectedIndexChanged);
+            // 
+            // bLanguageSettings
+            // 
+            this.bLanguageSettings.BackColor = System.Drawing.SystemColors.Control;
+            this.bLanguageSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bLanguageSettings.Location = new System.Drawing.Point(12, 260);
+            this.bLanguageSettings.Name = "bLanguageSettings";
+            this.bLanguageSettings.Size = new System.Drawing.Size(100, 30);
+            this.bLanguageSettings.TabIndex = 11;
+            this.bLanguageSettings.Text = "语言设置";
+            this.bLanguageSettings.UseVisualStyleBackColor = false;
+            this.bLanguageSettings.Visible = true;
+            this.bLanguageSettings.Click += new System.EventHandler(this.bLanguageSettings_Click);
             // 
             // tbDataSourceSelect
             // 
@@ -617,6 +662,9 @@
         private System.Windows.Forms.Label lVersion;
         private System.Windows.Forms.LinkLabel llDokumentation;
         private System.Windows.Forms.LinkLabel llLicenses;
+        private System.Windows.Forms.Label lblLanguage;
+        private System.Windows.Forms.ComboBox cbLanguage;
+        private System.Windows.Forms.Button bLanguageSettings;
         private System.Windows.Forms.Label lPossibleColumnsValue;
         private System.Windows.Forms.Label lPossibleColumns;
         private System.Windows.Forms.RichTextBox rtbWelcome;

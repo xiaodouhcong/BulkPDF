@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -166,6 +166,12 @@
     <value>Bitte wählen sie eine gespeicherte Konfigurationsdatei aus.</value>
   </data>
   <data name="MessageSelectSpreadsheet" xml:space="preserve">
-    <value>Bitte wählen sie eine Tabellenkakulationsdatei aus, um fortzufahren.</value>
+    <value>Bitte wählen Sie eine Tabellenkalkulationsdatei aus, um fortzufahren.</value>
+  </data>
+  <data name="MessageLanguageChanged" xml:space="preserve">
+    <value>Die Spracheinstellung wurde geändert. Bitte starten Sie die Anwendung neu, um die Änderungen zu übernehmen.</value>
+  </data>
+  <data name="MessageInfo" xml:space="preserve">
+    <value>Information</value>
   </data>
 </root>

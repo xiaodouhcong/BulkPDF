@@ -1,8 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
@@ -22,10 +26,180 @@ namespace BulkPDF
 
         public MainForm()
         {
-            InitializeComponent();
-            this.MinimumSize = new Size(500, 400);
+            try
+            {
+                File.AppendAllText("debug.log", $"[{DateTime.Now}] MainForm构造函数开始\n");
+                InitializeComponent();
+                this.MinimumSize = new Size(500, 400);
 
-            lVersion.Text = Application.ProductVersion.ToString();
+                lVersion.Text = Application.ProductVersion.ToString();
+                
+                // 初始化语言选择
+                InitializeLanguageSelection();
+                
+                File.AppendAllText("debug.log", $"[{DateTime.Now}] MainForm构造函数完成\n");
+                File.AppendAllText("debug.log", $"[{DateTime.Now}] 窗口状态: Visible={this.Visible}, WindowState={this.WindowState}, Location={this.Location}\n");
+            }
+            catch (Exception ex)
+            {
+                string errorMsg = $"[{DateTime.Now}] MainForm构造函数错误: {ex.Message}\n{ex.StackTrace}\n";
+                File.AppendAllText("debug.log", errorMsg);
+                MessageBox.Show($"程序启动错误: {ex.Message}\n{ex.StackTrace}", "错误", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw;
+            }
+        }
+
+        private void InitializeLanguageSelection()
+        {
+            // 确保控件可见
+            lblLanguage.Visible = true;
+            cbLanguage.Visible = true;
+            bLanguageSettings.Visible = true;
+            
+            // 设置按钮样式
+            bLanguageSettings.BackColor = System.Drawing.SystemColors.Control;
+            bLanguageSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            bLanguageSettings.BringToFront();
+            
+            // 记录调试信息
+            File.AppendAllText("debug.log", $"[{DateTime.Now}] InitializeLanguageSelection: bLanguageSettings.Visible={bLanguageSettings.Visible}, Location={bLanguageSettings.Location}, Size={bLanguageSettings.Size}\n");
+            
+            // 根据当前语言设置选择对应的选项
+            string currentLang = OptionFileHandler.GetOptionValue("Language");
+            switch (currentLang)
+            {
+                case "de":
+                    cbLanguage.SelectedIndex = 1;
+                    break;
+                case "zh-CN":
+                    cbLanguage.SelectedIndex = 2;
+                    break;
+                default:
+                    cbLanguage.SelectedIndex = 0;
+                    break;
+            }
+        }
+
+        private void cbLanguage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedLang = "";
+            switch (cbLanguage.SelectedIndex)
+            {
+                case 0:
+                    selectedLang = "en";
+                    break;
+                case 1:
+                    selectedLang = "de";
+                    break;
+                case 2:
+                    selectedLang = "zh-CN";
+                    break;
+            }
+
+            if (!string.IsNullOrEmpty(selectedLang))
+            {
+                // 保存语言设置
+                OptionFileHandler.SetOptionValue("Language", selectedLang);
+                
+                // 不再提示用户重启应用，直接应用语言设置
+                // MessageBox.Show(Properties.Resources.MessageLanguageChanged, Properties.Resources.MessageInfo, 
+                //     MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        
+        private void bLanguageSettings_Click(object sender, EventArgs e)
+        {
+            // 创建语言设置对话框
+            Form languageDialog = new Form();
+            languageDialog.Text = "语言设置 / Language Settings";
+            languageDialog.FormBorderStyle = FormBorderStyle.FixedDialog;
+            languageDialog.ControlBox = true;
+            languageDialog.MaximizeBox = false;
+            languageDialog.MinimizeBox = false;
+            languageDialog.StartPosition = FormStartPosition.CenterParent;
+            languageDialog.Width = 350;
+            languageDialog.Height = 200;
+            
+            // 添加标签
+            Label label = new Label();
+            label.Text = "请选择语言 / Please select language:";
+            label.Location = new Point(20, 20);
+            label.AutoSize = true;
+            languageDialog.Controls.Add(label);
+            
+            // 添加下拉框
+            ComboBox comboBox = new ComboBox();
+            comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox.Items.AddRange(new object[] { "English (en)", "Deutsch (de)", "中文 (zh-CN)" });
+            comboBox.Location = new Point(20, 50);
+            comboBox.Width = 200;
+            
+            // 设置当前选择的语言
+            string currentLang = OptionFileHandler.GetOptionValue("Language");
+            switch (currentLang)
+            {
+                case "de":
+                    comboBox.SelectedIndex = 1;
+                    break;
+                case "zh-CN":
+                    comboBox.SelectedIndex = 2;
+                    break;
+                default:
+                    comboBox.SelectedIndex = 0;
+                    break;
+            }
+            
+            languageDialog.Controls.Add(comboBox);
+            
+            // 添加确定按钮
+            Button okButton = new Button();
+            okButton.Text = "确定 / OK";
+            okButton.Location = new Point(20, 100);
+            okButton.DialogResult = DialogResult.OK;
+            languageDialog.Controls.Add(okButton);
+            
+            // 添加取消按钮
+            Button cancelButton = new Button();
+            cancelButton.Text = "取消 / Cancel";
+            cancelButton.Location = new Point(120, 100);
+            cancelButton.DialogResult = DialogResult.Cancel;
+            languageDialog.Controls.Add(cancelButton);
+            
+            // 设置接受和取消按钮
+            languageDialog.AcceptButton = okButton;
+            languageDialog.CancelButton = cancelButton;
+            
+            // 显示对话框
+            if (languageDialog.ShowDialog() == DialogResult.OK)
+            {
+                string selectedLang = "";
+                switch (comboBox.SelectedIndex)
+                {
+                    case 0:
+                        selectedLang = "en";
+                        break;
+                    case 1:
+                        selectedLang = "de";
+                        break;
+                    case 2:
+                        selectedLang = "zh-CN";
+                        break;
+                }
+
+                if (!string.IsNullOrEmpty(selectedLang))
+                {
+                    // 保存语言设置
+                    OptionFileHandler.SetOptionValue("Language", selectedLang);
+                    
+                    // 更新主界面的语言选择下拉框
+                    cbLanguage.SelectedIndex = comboBox.SelectedIndex;
+                    
+                    // 提示用户需要重启应用才能完全应用新语言
+                    MessageBox.Show("语言设置已保存。重启应用程序后新语言将完全生效。\n\nLanguage settings saved. Restart the application for the new language to take full effect.", 
+                        "提示 / Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
         }
 
         /**************************************************/
@@ -55,9 +229,23 @@ namespace BulkPDF
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            File.AppendAllText("debug.log", $"[{DateTime.Now}] MainForm_Load事件开始\n");
+            
             // Necessary hack to display the correct button(s) after program start
             wizardPages.SelectedIndex = 1;
             wizardPages.SelectedIndex = 0;
+            
+            // 确保窗口可见
+            this.Visible = true;
+            this.WindowState = FormWindowState.Normal;
+            this.BringToFront();
+            this.Activate();
+            
+            // 确保语言设置按钮可见
+            bLanguageSettings.Visible = true;
+            bLanguageSettings.BringToFront();
+            
+            File.AppendAllText("debug.log", $"[{DateTime.Now}] MainForm_Load事件完成 - 窗口应该可见\n");
         }
 
         private void wizardPages_SelectedIndexChanged(object sender, EventArgs e)
@@ -724,6 +912,12 @@ namespace BulkPDF
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
+            // 确保语言设置按钮可见
+            bLanguageSettings.Visible = true;
+            bLanguageSettings.BringToFront();
+            
+            // 记录调试信息
+            File.AppendAllText("debug.log", $"[{DateTime.Now}] MainForm_Shown: bLanguageSettings.Visible={bLanguageSettings.Visible}, Location={bLanguageSettings.Location}, Size={bLanguageSettings.Size}\n");
         }
     }
 }

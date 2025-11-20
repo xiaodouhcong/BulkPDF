@@ -166,6 +166,12 @@
     <value>请选择配置文件。</value>
   </data>
   <data name="MessageSelectSpreadsheet" xml:space="preserve">
-    <value>请选择要继续的电子表格文件。</value>
+    <value>请选择一个电子表格文件以继续。</value>
+  </data>
+  <data name="MessageLanguageChanged" xml:space="preserve">
+    <value>语言设置已更改。请重新启动应用程序以应用更改。</value>
+  </data>
+  <data name="MessageInfo" xml:space="preserve">
+    <value>信息</value>
   </data>
 </root>
